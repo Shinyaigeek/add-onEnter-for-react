@@ -3,7 +3,7 @@ module.exports = {
   mode:"production",
   entry: "./src/addOnEvent.tsx",
 	output: {
-		path: path.resolve(__dirname, "./lib"),
+		path: path.resolve(__dirname, "../editor-proof/node_modules/add-onenter-for-react/lib"),
 		filename: "bundle.js",
 		libraryTarget: "commonjs2"
 	},

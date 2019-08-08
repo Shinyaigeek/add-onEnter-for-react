@@ -23,16 +23,17 @@ export default function AddOnEvent(props: {
 	useEffect(() => {
 		const targetDocument = ensure(document.querySelector(".AddonEventWrapper"));
 
+		
 		if (props.onEnter || props.onShiftEnter || props.onControlEnter) {
 			targetDocument.addEventListener("keydown", (event: Keyboard) => {
 				if (!event.isComposing) {
 					if (event.code === "Enter") {
 						if (event.shiftKey) {
-							return props.onShiftEnter;
+							return props.onShiftEnter();
 						} else if (event.metaKey) {
-							return props.onControlEnter;
+							return props.onControlEnter();
 						} else {
-							return props.onEnter;
+							return props.onEnter();
 						}
 					}
 				}
