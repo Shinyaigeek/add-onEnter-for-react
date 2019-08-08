@@ -16,9 +16,9 @@ interface Keyboard extends KeyboardEvent {
 
 export default function AddOnEvent(props: {
 	children: ReactChild | ReactChildren;
-	onEnter: Function;
-	onShiftEnter: Function;
-	onControlEnter: Function;
+	onEnter?: Function;
+	onShiftEnter?: Function;
+	onControlEnter?: Function;
 }) {
 	useEffect(() => {
 		const targetDocument = ensure(document.querySelector(".AddonEventWrapper"));
@@ -28,11 +28,11 @@ export default function AddOnEvent(props: {
 			targetDocument.addEventListener("keydown", (event: Keyboard) => {
 				if (!event.isComposing) {
 					if (event.code === "Enter") {
-						if (event.shiftKey) {
+						if (event.shiftKey && props.onShiftEnter) {
 							return props.onShiftEnter();
-						} else if (event.metaKey) {
+						} else if (event.metaKey && props.onControlEnter) {
 							return props.onControlEnter();
-						} else {
+						} else if(props.onEnter){
 							return props.onEnter();
 						}
 					}
