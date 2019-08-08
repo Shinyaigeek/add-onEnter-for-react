@@ -1,5 +1,9 @@
+
 function App() {
-    return <div>Hello React</div>
+    return (
+    <div>
+        <textarea></textarea>
+    </div>)
 }
 
 const target = document.querySelector('#app');

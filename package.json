@@ -1,12 +1,12 @@
 {
   "name": "add-onenter-for-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is HOC for React/Next.js. This Component add onEnter/onControlEnter/onShifEnter Event to Component.",
-  "main": "./src/index.ts",
+  "main": "./lib/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "transpile": "babel .lib/bundle.js",
-    "build": "webpack"
+    "transpile": "babel ./lib/bundle.js",
+    "build": "webpack --config webpack.config.js"
   },
   "keywords": [
     "textfield",
@@ -19,8 +19,16 @@
   "dependencies": {
     "@types/react": "^16.8.24",
     "babel": "^6.23.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "path": "^0.12.7",
     "react": "^16.8.6",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "webpack": "^4.39.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.6"
   }
 }
