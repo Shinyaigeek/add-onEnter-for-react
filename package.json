@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "This is HOC for React/Next.js. This Component add onEnter/onControlEnter/onShifEnter Event to Component.",
   "main": "./lib/bundle.js",
+  "types":"./lib/index.d.ts",
   "repository": {
     "type":"git",
     "url":"https://github.com/Shinyaigeek/add-onEnter-for-react"
