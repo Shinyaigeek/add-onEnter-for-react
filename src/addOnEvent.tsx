@@ -1,33 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ReactChild, ReactChildren } from "react";
 
-export default function addOnEvent(
-	ChildComponent: React.ComponentType,
-	onEnter: Function | null = null,
-	onShiftEnter: Function | null = null,
-	onControlEnter: Function | null = null
+function ensure<T>(
+	arg: T | undefined | null,
+	message: string = "This value was promised to always be there"
 ) {
-    function ensure<T>(
-        argument: T | undefined | null,
-        message: string = 'This value was promised to always be there'
-    ) {
-        if (argument === undefined || argument === null) {
-            throw new TypeError(message);
-        }
-        return argument;
-    }
+	if (arg == null) {
+		throw new TypeError(message);
+	}
+	return arg;
+}
 
+interface Keyboard extends KeyboardEvent {
+	isComposing: boolean;
+}
+
+export default function AddOnEvent(props: {
+	children: ReactChild | ReactChildren;
+	onEnter: Function;
+	onShiftEnter: Function;
+	onControlEnter: Function;
+}) {
 	useEffect(() => {
-        const targetDocument = ensure(document.querySelector('.AddonEventWrapper'))
-		if(onEnter){
-            targetDocument.addEventListener("keyup",() => {
+		const targetDocument = ensure(document.querySelector(".AddonEventWrapper"));
 
-            })
-        }
+		if (props.onEnter || props.onShiftEnter || props.onControlEnter) {
+			targetDocument.addEventListener("keydown", (event: Keyboard) => {
+				if (!event.isComposing) {
+					if (event.code === "Enter") {
+						if (event.shiftKey) {
+							return props.onShiftEnter;
+						} else if (event.metaKey) {
+							return props.onControlEnter;
+						} else {
+							return props.onEnter;
+						}
+					}
+				}
+			});
+		}
 	});
 
-	return (
-		<div className="AddonEventWrapper">
-			<ChildComponent />
-		</div>
-	);
+	return <div className="AddonEventWrapper">{props.children}</div>;
 }
