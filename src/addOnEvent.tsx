@@ -23,10 +23,11 @@ export default function AddOnEvent(props: {
 
 	useEffect(() => {
 		const addTargetDocument = ensure(
-			document.getElementsByClassName('AddonEventWrapper')
+			document.getElementsByClassName('AddEventWrapper')
 		)
 		Array.prototype.forEach.call(addTargetDocument, (target: Element) => {
-			addEventListener('keyup',(event:Keyboard) => {
+			target.addEventListener('keyup',(event:Keyboard) => {
+				console.log(event)
 				if (!event.isComposing) {
 					if (event.code === "Enter") {
 						if (event.shiftKey && props.onShiftEnter) {
