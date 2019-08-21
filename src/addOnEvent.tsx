@@ -16,36 +16,41 @@ interface Keyboard extends KeyboardEvent {
 
 export default function AddOnEvent(props: {
 	children: ReactChild | ReactChildren;
-	onEnter?: Function;
-	onShiftEnter?: Function;
-	onControlEnter?: Function;
+	onEnter?: () => void;
+	onShiftEnter?: () => void;
+	onControlEnter?: () => void;
 }) {
-	const [flag, handleFlag] = useState(false);
+
 	useEffect(() => {
-		const targetDocument = ensure(document.querySelector(".AddonEventWrapper"));
-
-		if (props.onEnter || props.onShiftEnter || props.onControlEnter) {
-			targetDocument.addEventListener("keydown", async (event: Keyboard) => {
-				if (!flag) {
-					await handleFlag(true);
-					if (!event.isComposing) {
-						if (event.code === "Enter") {
-							if (event.shiftKey && props.onShiftEnter) {
-								await props.onShiftEnter();
-								return handleFlag(false);
-							} else if (event.metaKey && props.onControlEnter) {
-								await props.onControlEnter();
-								return handleFlag(false);
-							} else if (props.onEnter) {
-								await props.onEnter();
-								return handleFlag(false);
-							}
+		const addTargetDocument = ensure(
+			document.getElementsByClassName('AddonEventWrapper')
+		)
+		Array.prototype.forEach.call(addTargetDocument, (target: Element) => {
+			addEventListener('keyup',(event:Keyboard) => {
+				if (!event.isComposing) {
+					if (event.code === "Enter") {
+						if (event.shiftKey && props.onShiftEnter) {
+							return props.onShiftEnter();
+						} else if (event.metaKey && props.onControlEnter) {
+							return props.onControlEnter();
+						} else if (props.onEnter) {
+							return props.onEnter();
+						} else {
+							return null;
 						}
+					} else {
+						return null;
 					}
+				} else {
+					return null;
 				}
-			});
-		}
-	});
+			},{
+				capture:true
+			})
+		});
+	})
 
-	return <div className="AddonEventWrapper">{props.children}</div>;
+	return (
+		<div className="AddEventWrapper">{props.children}</div>
+	);
 }
