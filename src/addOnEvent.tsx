@@ -57,79 +57,87 @@ interface Keyboard extends KeyboardEvent {
 // }
 
 interface Props {
-	onEnter?:() => void,
-	onShiftEnter?:() => void,
-	onControlEnter?:() => void,
+	onEnter?: () => void;
+	onShiftEnter?: () => void;
+	onControlEnter?: () => void;
 }
 
-export default class addOnEvent extends React.Component<Props,{}> {
+interface State {
+	random: string;
+}
+
+export default class addOnEvent extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+			random: Math.random()
+				.toString(36)
+				.slice(-12)
+		};
+	}
 	componentDidMount() {
-		const addTargetDocument = ensure(
-			document.getElementsByClassName("AddEventWrapper")
-		);
-		Array.prototype.forEach.call(addTargetDocument, (target: Element) => {
-			target.addEventListener(
-				"keyup",
-				(event: Keyboard) => {
-					if (!event.isComposing) {
-						if (event.code === "Enter") {
-							if (event.shiftKey && this.props.onShiftEnter) {
-								return this.props.onShiftEnter();
-							} else if (event.metaKey && this.props.onControlEnter) {
-								return this.props.onControlEnter();
-							} else if (this.props.onEnter) {
-								return this.props.onEnter();
-							} else {
-								return null;
-							}
+		const addTargetDocument = ensure(document.getElementById(this.state.random));
+		addTargetDocument.addEventListener(
+			"keyup",
+			(event: Keyboard) => {
+				if (!event.isComposing) {
+					if (event.code === "Enter") {
+						if (event.shiftKey && this.props.onShiftEnter) {
+							return this.props.onShiftEnter();
+						} else if (event.metaKey && this.props.onControlEnter) {
+							return this.props.onControlEnter();
+						} else if (this.props.onEnter) {
+							return this.props.onEnter();
 						} else {
 							return null;
 						}
 					} else {
 						return null;
 					}
-				},
-				{
-					capture: true
+				} else {
+					return null;
 				}
-			);
-		});
+			},
+			{
+				capture: true
+			}
+		);
 	}
 
 	componentWillUpdate() {
-		const addTargetDocument = ensure(
-			document.getElementsByClassName("AddEventWrapper")
-		);
-		Array.prototype.forEach.call(addTargetDocument, (target: Element) => {
-			target.removeEventListener(
-				"keyup",
-				(event: Keyboard) => {
-					if (!event.isComposing) {
-						if (event.code === "Enter") {
-							if (event.shiftKey && this.props.onShiftEnter) {
-								return this.props.onShiftEnter();
-							} else if (event.metaKey && this.props.onControlEnter) {
-								return this.props.onControlEnter();
-							} else if (this.props.onEnter) {
-								return this.props.onEnter();
-							} else {
-								return null;
-							}
+		const addTargetDocument = ensure(document.getElementById(this.state.random));
+		addTargetDocument.removeEventListener(
+			"keyup",
+			(event: Keyboard) => {
+				if (!event.isComposing) {
+					if (event.code === "Enter") {
+						if (event.shiftKey && this.props.onShiftEnter) {
+							return this.props.onShiftEnter();
+						} else if (event.metaKey && this.props.onControlEnter) {
+							return this.props.onControlEnter();
+						} else if (this.props.onEnter) {
+							return this.props.onEnter();
 						} else {
 							return null;
 						}
 					} else {
 						return null;
 					}
-				},
-				{
-					capture: true
+				} else {
+					return null;
 				}
-			);
-		});
+			},
+			{
+				capture: true
+			}
+		);
 	}
 
 	render() {
-		return <div className="AddEventWrapper">{this.props.children}</div>;
+		return (
+			<div className="AddEventWrapper" id={this.state.random}>
+				{this.props.children}
+			</div>
+		);
 	}
 }

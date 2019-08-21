@@ -1,6 +1,6 @@
 {
   "name": "add-onenter-for-react",
-  "version": "1.2.0",
+  "version": "1.2.4",
   "description": "This is HOC for React/Next.js. This Component add onEnter/onControlEnter/onShifEnter Event to Component.",
   "main": "./lib/bundle.js",
   "types":"./lib/index.d.ts",
@@ -19,12 +19,12 @@
     "Event",
     "React"
   ],
-  "author": "Shinyaigeek <PhilisPaxil@gmail> (https://github.com/Shinyaigeek)",
+  "author": "Shinyaigeek <PhilisPaxil@gmail.com> (https://github.com/Shinyaigeek)",
   "license": "MIT",
   "dependencies": {
     "@types/react": "^16.8.24",
     "babel": "^6.23.0",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.0.5",
     "css-loader": "^3.2.0",
     "path": "^0.12.7",
     "react": "^16.8.6",
