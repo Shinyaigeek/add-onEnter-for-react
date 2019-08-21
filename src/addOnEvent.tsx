@@ -71,7 +71,6 @@ export default class addOnEvent extends React.Component<Props,{}> {
 			target.addEventListener(
 				"keyup",
 				(event: Keyboard) => {
-					console.log(event);
 					if (!event.isComposing) {
 						if (event.code === "Enter") {
 							if (event.shiftKey && this.props.onShiftEnter) {
@@ -105,7 +104,6 @@ export default class addOnEvent extends React.Component<Props,{}> {
 			target.removeEventListener(
 				"keyup",
 				(event: Keyboard) => {
-					console.log(event);
 					if (!event.isComposing) {
 						if (event.code === "Enter") {
 							if (event.shiftKey && this.props.onShiftEnter) {
